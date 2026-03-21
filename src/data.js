@@ -18,8 +18,8 @@ export const content = {
     about: {
       label: 'About',
       title: 'Who I am',
-      p1: "I'm Cristian Quirós, a Software Engineering student at Universidad Latina de Costa Rica (San Pedro). I currently work as IT Lead & Web Developer at Tubertico, where I manage the full IT area — from infrastructure planning to web development and deployment.",
-      p2: "I enjoy building things end-to-end: from database design to cloud deployment. I'm currently expanding my skills into TypeScript, modern React patterns, and system design. Open to junior roles, internships, and remote opportunities anywhere in the world.",
+      p1: "I'm Cristian Quirós, a Software Engineering student at Universidad Latina de Costa Rica (San Pedro). I serve as IT Lead & Web Developer at Tubertico, where I own the full technology stack — from infrastructure and deployment to web development.",
+      p2: "I build end-to-end: database design, REST APIs, containerized deployments. Currently expanding into TypeScript, modern React patterns, and system design. Actively looking for junior roles, internships, and remote opportunities worldwide.",
     },
     stack: {
       label: 'Stack',
@@ -96,8 +96,8 @@ export const content = {
     about: {
       label: 'Sobre mí',
       title: 'Quién soy',
-      p1: "Soy Cristian Quirós, estudiante de Ingeniería del Software en la Universidad Latina de Costa Rica (Sede San Pedro). Actualmente trabajo como IT Lead & Web Developer en Tubertico, donde soy responsable de toda el área tecnológica — desde la infraestructura hasta el desarrollo y despliegue web.",
-      p2: "Me gusta construir cosas de punta a punta: desde el diseño de la base de datos hasta el despliegue en la nube. Actualmente estoy ampliando mis habilidades en TypeScript, patrones modernos de React y diseño de sistemas. Abierto a roles junior, prácticas y trabajo remoto en cualquier parte del mundo.",
+      p1: "Soy Cristian Quirós, estudiante de Ingeniería del Software en la Universidad Latina de Costa Rica (Sede San Pedro). Me desempeño como IT Lead & Web Developer en Tubertico, donde soy dueño del stack tecnológico completo — desde la infraestructura y el despliegue hasta el desarrollo web.",
+      p2: "Construyo de punta a punta: diseño de base de datos, APIs REST, despliegues con Docker. Actualmente ampliando mis habilidades en TypeScript, React moderno y diseño de sistemas. En búsqueda activa de roles junior, prácticas y trabajo remoto en cualquier parte del mundo.",
     },
     stack: {
       label: 'Stack',

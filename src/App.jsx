@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { content, techStack } from './data'
 import avatar from './assets/avatar.jpg'
 import tuberticoIcon from './assets/tubertico_icon.png'
+import tuberticoIconGreen from './assets/tubertico_icon_green.png'
 
 const GREEN = '#6AB42D'
 
@@ -45,29 +46,31 @@ export default function App() {
     <div className="min-h-screen bg-[#0f0f0f] text-[#e5e5e5] font-sans">
 
       {/* NAV */}
-      <nav className="sticky top-0 z-50 flex justify-between items-center px-6 py-4 border-b border-[#1e1e1e] bg-[#0f0f0f]/90 backdrop-blur-sm">
-        <span className="text-base font-bold tracking-tight text-white">
-          CQ<span style={{ color: GREEN }}>.</span>dev
-        </span>
-        <div className="hidden md:flex gap-6">
-          {['about','stack','projects','blog','contact'].map(k => (
-            <button key={k} onClick={() => scrollTo(k)}
-              className="text-sm text-[#888] hover:text-[#6AB42D] transition-colors capitalize">
-              {t.nav[k]}
-            </button>
-          ))}
-        </div>
-        <div className="flex gap-1">
-          {['en','es'].map(l => (
-            <button key={l} onClick={() => setLang(l)}
-              className={`text-xs px-3 py-1 rounded border transition-colors uppercase font-medium ${
-                lang === l
-                  ? 'bg-[#6AB42D] text-white border-[#6AB42D]'
-                  : 'bg-transparent text-[#666] border-[#333] hover:border-[#555]'
-              }`}>
-              {l}
-            </button>
-          ))}
+      <nav className="sticky top-0 z-50 border-b border-[#1e1e1e] bg-[#0f0f0f]/90 backdrop-blur-sm">
+        <div className="max-w-5xl mx-auto px-6 py-4 grid grid-cols-3 items-center">
+          <span className="text-base font-bold tracking-tight text-white">
+            CQ<span style={{ color: GREEN }}>.</span>dev
+          </span>
+          <div className="hidden md:flex justify-center gap-6">
+            {['about','stack','projects','blog','contact'].map(k => (
+              <button key={k} onClick={() => scrollTo(k)}
+                className="text-sm text-[#888] hover:text-[#6AB42D] transition-colors capitalize">
+                {t.nav[k]}
+              </button>
+            ))}
+          </div>
+          <div className="flex justify-end gap-1">
+            {['en','es'].map(l => (
+              <button key={l} onClick={() => setLang(l)}
+                className={`text-xs px-3 py-1 rounded border transition-colors uppercase font-medium ${
+                  lang === l
+                    ? 'bg-[#6AB42D] text-white border-[#6AB42D]'
+                    : 'bg-transparent text-[#666] border-[#333] hover:border-[#555]'
+                }`}>
+                {l}
+              </button>
+            ))}
+          </div>
         </div>
       </nav>
 
@@ -148,9 +151,12 @@ export default function App() {
               <div>
                 <div className="flex justify-between items-start mb-2">
                   <div className="flex items-center gap-2">
-                    {proj.title === 'tubertico.com' || proj.title === 'Tubertico ERP' ? (
-                      <img src={tuberticoIcon} alt="Tubertico" className="w-5 h-7 object-contain" />
-                    ) : null}
+                    {proj.title === 'tubertico.com' && (
+                      <img src={tuberticoIconGreen} alt="" className="w-4 h-6 object-contain" />
+                    )}
+                    {proj.title === 'Tubertico ERP' && (
+                      <img src={tuberticoIcon} alt="" className="w-4 h-6 object-contain" />
+                    )}
                     <span className="text-white font-semibold text-base">{proj.title}</span>
                   </div>
                   <span className={`text-[11px] px-2 py-0.5 rounded-full border ${
