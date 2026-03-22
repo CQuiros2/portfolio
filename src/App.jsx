@@ -47,7 +47,7 @@ export default function App() {
 
       {/* NAV */}
       <nav className="sticky top-0 z-50 border-b border-[#1e1e1e] bg-[#0f0f0f]/90 backdrop-blur-sm">
-        <div className="max-w-5xl mx-auto px-6 py-4 grid grid-cols-3 items-center">
+        <div className="max-w-5xl mx-auto px-4 md:px-6 py-4 grid grid-cols-3 items-center">
           <span className="text-base font-bold tracking-tight text-white">
             CQ<span style={{ color: GREEN }}>.</span>dev
           </span>
@@ -75,12 +75,12 @@ export default function App() {
       </nav>
 
       {/* HERO */}
-      <section className="max-w-3xl mx-auto px-6 pt-20 pb-16">
+      <section className="max-w-3xl mx-auto px-4 md:px-6 pt-20 pb-16">
         <span className="inline-block text-xs px-3 py-1 rounded-full border mb-6"
           style={{ background: '#1a2a0f', color: GREEN, borderColor: '#2d4a1a' }}>
           {t.hero.tag}
         </span>
-        <h1 className="text-5xl font-bold leading-tight tracking-tight text-white mb-4">
+        <h1 className="text-3xl md:text-5xl font-bold leading-tight tracking-tight text-white mb-4">
           {t.hero.title1}<br />
           {t.hero.title2}<span style={{ color: GREEN }}>.</span>
         </h1>
@@ -101,10 +101,10 @@ export default function App() {
       </section>
 
       {/* ABOUT */}
-      <section id="about" className="max-w-3xl mx-auto px-6 py-14 border-t border-[#1e1e1e]">
+      <section id="about" className="max-w-3xl mx-auto px-4 md:px-6 py-14 border-t border-[#1e1e1e]">
         <SectionLabel>{t.about.label}</SectionLabel>
         <h2 className="text-2xl font-semibold text-white mb-8 tracking-tight">{t.about.title}</h2>
-        <div className="flex gap-6 items-start">
+        <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
           <img src={avatar} alt="Cristian Quirós"
             className="w-20 h-20 rounded-full object-cover border-2 flex-shrink-0"
             style={{ borderColor: GREEN }} />
@@ -116,7 +116,7 @@ export default function App() {
       </section>
 
       {/* STACK */}
-      <section id="stack" className="max-w-3xl mx-auto px-6 py-14 border-t border-[#1e1e1e]">
+      <section id="stack" className="max-w-3xl mx-auto px-4 md:px-6 py-14 border-t border-[#1e1e1e]">
         <SectionLabel>{t.stack.label}</SectionLabel>
         <h2 className="text-2xl font-semibold text-white mb-8 tracking-tight">{t.stack.title}</h2>
         <div className="space-y-5">
@@ -141,7 +141,7 @@ export default function App() {
       </section>
 
       {/* PROJECTS */}
-      <section id="projects" className="max-w-3xl mx-auto px-6 py-14 border-t border-[#1e1e1e]">
+      <section id="projects" className="max-w-3xl mx-auto px-4 md:px-6 py-14 border-t border-[#1e1e1e]">
         <SectionLabel>{t.projects.label}</SectionLabel>
         <h2 className="text-2xl font-semibold text-white mb-8 tracking-tight">{t.projects.title}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -185,7 +185,7 @@ export default function App() {
       </section>
 
       {/* BLOG */}
-      <section id="blog" className="max-w-3xl mx-auto px-6 py-14 border-t border-[#1e1e1e]">
+      <section id="blog" className="max-w-3xl mx-auto px-4 md:px-6 py-14 border-t border-[#1e1e1e]">
         <SectionLabel>{t.blog.label}</SectionLabel>
         <h2 className="text-2xl font-semibold text-white mb-2 tracking-tight">{t.blog.title}</h2>
         <p className="text-[#555] text-sm mb-8">{t.blog.subtitle}</p>
@@ -207,7 +207,7 @@ export default function App() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="max-w-3xl mx-auto px-6 py-14 border-t border-[#1e1e1e]">
+      <section id="contact" className="max-w-3xl mx-auto px-4 md:px-6 py-14 border-t border-[#1e1e1e]">
         <SectionLabel>{t.contact.label}</SectionLabel>
         <h2 className="text-2xl font-semibold text-white mb-2 tracking-tight">{t.contact.title}</h2>
         <p className="text-[#666] text-sm mb-8 max-w-md leading-relaxed">{t.contact.desc}</p>
