@@ -10,7 +10,7 @@
 
 Personal portfolio of Cristian Quirós — Full Stack Developer from Costa Rica.
 
-Live at: **[your-url.vercel.app](https://your-url.vercel.app)**
+Live at: **[cquiros-dev.vercel.app](https://cquiros-dev.vercel.app)**
 
 ## Built with
 
@@ -40,7 +40,7 @@ npm run dev
 
 Portfolio personal de Cristian Quirós — Desarrollador Full Stack de Costa Rica.
 
-En línea en: **[your-url.vercel.app](https://your-url.vercel.app)**
+En línea en: **[cquiros-dev.vercel.app](https://cquiros-dev.vercel.app)**
 
 ## Construido con
 
