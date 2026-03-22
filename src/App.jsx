@@ -51,10 +51,10 @@ export default function App() {
           <span className="text-base font-bold tracking-tight text-white">
             CQ<span style={{ color: GREEN }}>.</span>dev
           </span>
-          <div className="hidden md:flex justify-center gap-6">
+          <div className="hidden md:flex justify-center items-center gap-5">
             {['about','stack','projects','blog','contact'].map(k => (
               <button key={k} onClick={() => scrollTo(k)}
-                className="text-sm text-[#888] hover:text-[#6AB42D] transition-colors capitalize">
+                className="text-sm text-[#888] hover:text-[#6AB42D] transition-colors capitalize whitespace-nowrap">
                 {t.nav[k]}
               </button>
             ))}
