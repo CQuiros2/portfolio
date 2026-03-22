@@ -8,7 +8,7 @@ export const content = {
       contact: 'Contact',
     },
     hero: {
-      tag: 'Available for work · San José, CR · Remote worldwide',
+      tag: '🇨🇷 San José, Costa Rica · Available for work · Remote worldwide',
       title1: 'Full Stack',
       title2: 'Developer',
       desc: "Software Engineering student in my final year at Universidad Latina de Costa Rica. I build and deploy real production systems — from backend APIs to full web applications.",
@@ -86,7 +86,7 @@ export const content = {
       contact: 'Contacto',
     },
     hero: {
-      tag: 'Disponible para trabajar · San José, CR · Remoto a cualquier parte del mundo',
+      tag: '🇨🇷 San José, Costa Rica · Disponible para trabajar · Remoto a cualquier parte del mundo',
       title1: 'Desarrollador',
       title2: 'Full Stack',
       desc: "Estudiante de Ingeniería del Software en mi último año en la Universidad Latina de Costa Rica. Construyo y despliego sistemas reales en producción — desde APIs backend hasta aplicaciones web completas.",
