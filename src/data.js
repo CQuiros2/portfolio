@@ -19,7 +19,7 @@ export const content = {
       label: 'About',
       title: 'Who I am',
       p1: "I'm Cristian Quirós, a Software Engineering student at Universidad Latina de Costa Rica (San Pedro). I serve as IT Lead & Web Developer at Tubertico, where I own the full technology stack — from infrastructure and deployment to web development.",
-      p2: "I build end-to-end: database design, REST APIs, containerized deployments. Currently expanding into TypeScript, modern React patterns, and system design. Actively looking for junior roles, internships, and remote opportunities worldwide.",
+      p2: "I build end-to-end: database design, REST APIs, containerized deployments. Currently expanding into TypeScript, modern React patterns, and system design. <mark>Actively looking for junior roles, internships, and remote opportunities worldwide.</mark>",
     },
     stack: {
       label: 'Stack',
@@ -97,7 +97,7 @@ export const content = {
       label: 'Sobre mí',
       title: 'Quién soy',
       p1: "Soy Cristian Quirós, estudiante de Ingeniería del Software en la Universidad Latina de Costa Rica (Sede San Pedro). Me desempeño como IT Lead & Web Developer en Tubertico, donde soy dueño del stack tecnológico completo — desde la infraestructura y el despliegue hasta el desarrollo web.",
-      p2: "Construyo de punta a punta: diseño de base de datos, APIs REST, despliegues con Docker. Actualmente ampliando mis habilidades en TypeScript, React moderno y diseño de sistemas. En búsqueda activa de roles junior, prácticas y trabajo remoto en cualquier parte del mundo.",
+      p2: "Construyo de punta a punta: diseño de base de datos, APIs REST, despliegues con Docker. Actualmente ampliando mis habilidades en TypeScript, React moderno y diseño de sistemas. <mark>En búsqueda activa de roles junior, prácticas y trabajo remoto en cualquier parte del mundo.</mark>",
     },
     stack: {
       label: 'Stack',

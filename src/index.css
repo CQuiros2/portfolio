@@ -8,6 +8,13 @@ body {
   @apply bg-[#0f0f0f] text-[#e5e5e5] font-sans antialiased;
 }
 
+mark {
+  background-color: #6AB42D33;
+  color: #6AB42D;
+  padding: 0 3px;
+  border-radius: 3px;
+}
+
 ::selection {
   background: #6AB42D33;
   color: #6AB42D;

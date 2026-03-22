@@ -109,8 +109,8 @@ export default function App() {
             className="w-20 h-20 rounded-full object-cover border-2 flex-shrink-0"
             style={{ borderColor: GREEN }} />
           <div className="space-y-3">
-            <p className="text-[#888] text-sm leading-relaxed">{t.about.p1}</p>
-            <p className="text-[#888] text-sm leading-relaxed">{t.about.p2}</p>
+            <p className="text-[#888] text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: t.about.p1 }} />
+            <p className="text-[#888] text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: t.about.p2 }} />
           </div>
         </div>
       </section>
