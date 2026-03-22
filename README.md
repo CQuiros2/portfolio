@@ -1,30 +1,63 @@
-# cquiros-portfolio
+---
 
-Personal portfolio of Cristian Quirós — Full Stack Developer.
+[🇺🇸 English](#english) | [🇨🇷 Español](#español)
 
-Built with React 19 + Vite + Tailwind CSS. Deployed on Vercel.
+---
 
-## Stack
+<a name="english"></a>
+
+# CQ · Portfolio
+
+Personal portfolio of Cristian Quirós — Full Stack Developer from Costa Rica.
+
+Live at: **[your-url.vercel.app](https://your-url.vercel.app)**
+
+## Built with
 
 - React 19
 - Vite
 - Tailwind CSS 3
 - Deployed on Vercel
 
-## Setup
-
+## Run locally
 ```bash
 npm install
 npm run dev
 ```
 
-## Deploy
+## Customize
 
-Push to GitHub and import on Vercel. Build command: `npm run build`. Output: `dist`.
+- All content (EN/ES) lives in `src/data.js`
+- Avatar: replace `src/assets/avatar.jpg`
+- Blog posts: add entries under `blog.items` in `src/data.js`
+- CVs: drop PDF files in `public/` and update the href in `App.jsx`
 
-## Customization
+---
 
-- Edit content in `src/data.js` (EN and ES)
-- Replace `src/assets/avatar.jpg` with your photo
-- Add blog posts in `src/data.js` under `blog.items`
-- Add your CV as `public/cv.pdf`
+<a name="español"></a>
+
+# CQ · Portfolio
+
+Portfolio personal de Cristian Quirós — Desarrollador Full Stack de Costa Rica.
+
+En línea en: **[your-url.vercel.app](https://your-url.vercel.app)**
+
+## Construido con
+
+- React 19
+- Vite
+- Tailwind CSS 3
+- Desplegado en Vercel
+
+## Correr localmente
+```bash
+npm install
+npm run dev
+```
+
+## Personalizar
+
+- Todo el contenido (EN/ES) está en `src/data.js`
+- Avatar: reemplazá `src/assets/avatar.jpg`
+- Posts del blog: agregá entradas en `blog.items` dentro de `src/data.js`
+- CVs: colocá los PDFs en `public/` y actualizá el href en `App.jsx`
