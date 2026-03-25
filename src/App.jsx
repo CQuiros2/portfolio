@@ -178,7 +178,7 @@ export default function App() {
       <section className="relative max-w-3xl mx-auto px-4 md:px-6 pt-20 pb-16">
         {/* Dot grid background */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-0 pointer-events-none z-0"
           style={{
             backgroundImage: 'radial-gradient(circle, #1e1e1e 1px, transparent 1px)',
             backgroundSize: '28px 28px',
@@ -187,6 +187,7 @@ export default function App() {
           }}
         />
 
+        <div className="relative z-10">
         <motion.div
           initial={{ opacity: 0, x: -24 }}
           animate={{ opacity: 1, x: 0 }}
@@ -223,6 +224,7 @@ export default function App() {
             </a>
           </div>
         </motion.div>
+        </div>
       </section>
 
       {/* ABOUT */}
