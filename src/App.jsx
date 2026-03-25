@@ -197,9 +197,11 @@ export default function App() {
             style={{ background: '#1a2a0f', color: GREEN, borderColor: '#2d4a1a' }}>
             {t.hero.tag}
           </span>
-          <h1 className="text-3xl md:text-5xl font-bold leading-tight tracking-tight text-white mb-4">
-            {t.hero.title1}<br />
-            {t.hero.title2}<span style={{ color: GREEN }}>.</span>
+          <h1 className="leading-tight tracking-tight text-white mb-4">
+            <span className="block text-3xl md:text-5xl font-bold">{t.hero.title1}</span>
+            <span className="block text-2xl md:text-4xl font-semibold mt-1" style={{ color: '#cccccc' }}>
+              {t.hero.title2}<span style={{ color: GREEN }}>.</span>
+            </span>
           </h1>
         </motion.div>
 
@@ -241,6 +243,10 @@ export default function App() {
           <div className="space-y-3 text-center md:text-left">
             <p className="text-[#888] text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: t.about.p1 }} />
             <p className="text-[#888] text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: t.about.p2 }} />
+            <div className="mt-4 inline-block text-xs px-4 py-2 rounded-full border"
+              style={{ background: '#1a2a0f', color: '#6AB42D', borderColor: '#2d4a1a' }}>
+              {t.about.badge}
+            </div>
           </div>
         </div>
       </motion.section>
