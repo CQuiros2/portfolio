@@ -4,6 +4,7 @@ export const content = {
       about: 'About',
       stack: 'Stack',
       projects: 'Projects',
+      education: 'Education',
       blog: 'Blog',
       contact: 'Contact',
     },
@@ -82,6 +83,7 @@ export const content = {
       about: 'Sobre mí',
       stack: 'Stack',
       projects: 'Proyectos',
+      education: 'Educación',
       blog: 'Blog',
       contact: 'Contacto',
     },
@@ -154,6 +156,53 @@ export const content = {
       title: 'Hablemos',
       desc: "Estoy disponible para trabajar — roles junior, prácticas, freelance, o simplemente una charla sobre tecnología. Escribime cuando quieras.",
     },
+  },
+}
+
+export const education = {
+  en: {
+    label: 'Education',
+    title: 'Academic background',
+    items: [
+      {
+        institution: 'Universidad Latina de Costa Rica',
+        degree: "Bachelor's Degree in Software Engineering",
+        location: 'San Pedro Campus, San José, CR',
+        period: '2020 – 2026 (Expected)',
+        status: 'Final year — graduating 2026',
+        logo: '/logo_ulatina_.png',
+      },
+      {
+        institution: 'Linux Professional Institute (LPI)',
+        degree: 'Linux Essentials Certification',
+        location: null,
+        period: '2024',
+        status: 'Certified',
+        logo: null,
+      },
+    ],
+  },
+  es: {
+    label: 'Educación',
+    title: 'Formación académica',
+    items: [
+      {
+        institution: 'Universidad Latina de Costa Rica',
+        degree: 'Licenciatura en Ingeniería del Software',
+        location: 'Sede San Pedro, San José, CR',
+        period: '2020 – 2026 (Esperado)',
+        status: 'Último año — graduación 2026',
+        logo: '/logo_ulatina_.png',
+      },
+      {
+        institution: 'Linux Professional Institute (LPI)',
+        degree: 'Certificación Linux Essentials',
+        location: null,
+        period: '2024',
+        status: 'Certificado',
+        logo: null,
+      },
+    ],
   },
 }
 

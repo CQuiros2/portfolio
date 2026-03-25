@@ -1,8 +1,10 @@
 import { useState } from 'react'
-import { content, techStack } from './data'
+import { motion } from 'framer-motion'
+import { content, techStack, education } from './data'
 import avatar from './assets/avatar.jpg'
 import tuberticoIcon from './assets/tubertico_icon.png'
 import tuberticoIconGreen from './assets/tubertico_icon_green.png'
+import Education from './components/Education'
 
 const GREEN = '#6AB42D'
 
@@ -52,7 +54,7 @@ export default function App() {
             CQ<span style={{ color: GREEN }}>.</span>dev
           </span>
           <div className="hidden md:flex justify-center items-center gap-5">
-            {['about','stack','projects','blog','contact'].map(k => (
+            {['about','stack','projects','education','blog','contact'].map(k => (
               <button key={k} onClick={() => scrollTo(k)}
                 className="text-sm text-[#888] hover:text-[#6AB42D] transition-colors capitalize whitespace-nowrap">
                 {t.nav[k]}
@@ -76,28 +78,40 @@ export default function App() {
 
       {/* HERO */}
       <section className="max-w-3xl mx-auto px-4 md:px-6 pt-20 pb-16">
-        <span className="inline-block text-xs px-3 py-1 rounded-full border mb-6"
-          style={{ background: '#1a2a0f', color: GREEN, borderColor: '#2d4a1a' }}>
-          {t.hero.tag}
-        </span>
-        <h1 className="text-3xl md:text-5xl font-bold leading-tight tracking-tight text-white mb-4">
-          {t.hero.title1}<br />
-          {t.hero.title2}<span style={{ color: GREEN }}>.</span>
-        </h1>
-        <p className="text-[#777] text-base leading-relaxed max-w-xl mb-8">
-          {t.hero.desc}
-        </p>
-        <div className="flex gap-3 flex-wrap">
-          <button onClick={() => scrollTo('projects')}
-            className="px-5 py-2.5 rounded-lg text-sm font-medium text-white transition-opacity hover:opacity-90"
-            style={{ background: GREEN }}>
-            {t.hero.cta1}
-          </button>
-          <a href={`/Cristian-Quiros-CV-${lang.toUpperCase()}.pdf`} download={`Cristian-Quiros-CV-${lang.toUpperCase()}.pdf`}
-            className="px-5 py-2.5 rounded-lg text-sm font-medium text-[#ccc] border border-[#444] hover:border-[#666] transition-colors">
-            {t.hero.cta2}
-          </a>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, x: -24 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <span className="inline-block text-xs px-3 py-1 rounded-full border mb-6"
+            style={{ background: '#1a2a0f', color: GREEN, borderColor: '#2d4a1a' }}>
+            {t.hero.tag}
+          </span>
+          <h1 className="text-3xl md:text-5xl font-bold leading-tight tracking-tight text-white mb-4">
+            {t.hero.title1}<br />
+            {t.hero.title2}<span style={{ color: GREEN }}>.</span>
+          </h1>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, x: 24 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4, delay: 0.15 }}
+        >
+          <p className="text-[#777] text-base leading-relaxed max-w-xl mb-8">
+            {t.hero.desc}
+          </p>
+          <div className="flex gap-3 flex-wrap">
+            <button onClick={() => scrollTo('projects')}
+              className="px-5 py-2.5 rounded-lg text-sm font-medium text-white transition-opacity hover:opacity-90"
+              style={{ background: GREEN }}>
+              {t.hero.cta1}
+            </button>
+            <a href={`/Cristian-Quiros-CV-${lang.toUpperCase()}.pdf`} download={`Cristian-Quiros-CV-${lang.toUpperCase()}.pdf`}
+              className="px-5 py-2.5 rounded-lg text-sm font-medium text-[#ccc] border border-[#444] hover:border-[#666] transition-colors">
+              {t.hero.cta2}
+            </a>
+          </div>
+        </motion.div>
       </section>
 
       {/* ABOUT */}
@@ -116,7 +130,14 @@ export default function App() {
       </section>
 
       {/* STACK */}
-      <section id="stack" className="max-w-3xl mx-auto px-4 md:px-6 py-14 border-t border-[#1e1e1e]">
+      <motion.section
+        id="stack"
+        className="max-w-3xl mx-auto px-4 md:px-6 py-14 border-t border-[#1e1e1e]"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        viewport={{ once: true }}
+      >
         <SectionLabel>{t.stack.label}</SectionLabel>
         <h2 className="text-2xl font-semibold text-white mb-8 tracking-tight">{t.stack.title}</h2>
         <div className="space-y-5">
@@ -138,15 +159,19 @@ export default function App() {
             </div>
           ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* PROJECTS */}
       <section id="projects" className="max-w-3xl mx-auto px-4 md:px-6 py-14 border-t border-[#1e1e1e]">
         <SectionLabel>{t.projects.label}</SectionLabel>
         <h2 className="text-2xl font-semibold text-white mb-8 tracking-tight">{t.projects.title}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {t.projects.items.map((proj) => (
-            <div key={proj.title}
+          {t.projects.items.map((proj, i) => (
+            <motion.div key={proj.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: i * 0.1 }}
+              viewport={{ once: true }}
               className="bg-[#161616] border border-[#2a2a2a] rounded-xl p-5 hover:border-[#3a5a1a] transition-colors flex flex-col justify-between gap-4">
               <div>
                 <div className="flex justify-between items-start mb-2">
@@ -179,10 +204,13 @@ export default function App() {
                   Visit site →
                 </a>
               )}
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
+
+      {/* EDUCATION */}
+      <Education data={education[lang]} />
 
       {/* BLOG */}
       <section id="blog" className="max-w-3xl mx-auto px-4 md:px-6 py-14 border-t border-[#1e1e1e]">
@@ -207,7 +235,14 @@ export default function App() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="max-w-3xl mx-auto px-4 md:px-6 py-14 border-t border-[#1e1e1e]">
+      <motion.section
+        id="contact"
+        className="max-w-3xl mx-auto px-4 md:px-6 py-14 border-t border-[#1e1e1e]"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        viewport={{ once: true }}
+      >
         <SectionLabel>{t.contact.label}</SectionLabel>
         <h2 className="text-2xl font-semibold text-white mb-2 tracking-tight">{t.contact.title}</h2>
         <p className="text-[#666] text-sm mb-8 max-w-md leading-relaxed">{t.contact.desc}</p>
@@ -268,7 +303,7 @@ export default function App() {
             </div>
           ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* FOOTER */}
       <footer className="border-t border-[#1e1e1e] py-8 text-center">
