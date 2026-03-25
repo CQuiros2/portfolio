@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { useState, useEffect, useRef } from 'react'
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion'
 import { content, techStack, education } from './data'
 import avatar from './assets/avatar.jpg'
 import tuberticoIcon from './assets/tubertico_icon.png'
@@ -7,13 +7,21 @@ import tuberticoIconGreen from './assets/tubertico_icon_green.png'
 import Education from './components/Education'
 
 const GREEN = '#6AB42D'
+const NAV_KEYS = ['about', 'stack', 'projects', 'education', 'blog', 'contact']
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  transition: { duration: 0.4, delay, ease: 'easeOut' },
+  viewport: { once: true },
+})
 
 function Badge({ children, highlight }) {
   return (
-    <span className={`text-xs px-3 py-1 rounded-md border ${
+    <span className={`text-xs px-3 py-1 rounded-md border transition-all ${
       highlight
-        ? 'bg-[#111e09] border-[#3a5a1a] text-[#6AB42D]'
-        : 'bg-[#1a1a1a] border-[#2a2a2a] text-[#aaa]'
+        ? 'bg-[#111e09] border-[#3a5a1a] text-[#6AB42D] badge-highlight'
+        : 'bg-[#1a1a1a] border-[#2a2a2a] text-[#aaa] hover:border-[#3a3a3a]'
     }`}>
       {children}
     </span>
@@ -30,41 +38,80 @@ function Tag({ children }) {
 
 function SectionLabel({ children }) {
   return (
-    <p className="text-xs font-semibold tracking-[2px] uppercase mb-1" style={{ color: GREEN }}>
-      {children}
-    </p>
+    <div className="flex items-center gap-2 mb-1">
+      <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: GREEN }} />
+      <p className="text-xs font-semibold tracking-[2px] uppercase" style={{ color: GREEN }}>
+        {children}
+      </p>
+    </div>
   )
 }
 
 export default function App() {
   const [lang, setLang] = useState('en')
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [showScrollTop, setShowScrollTop] = useState(false)
   const t = content[lang]
+  const navRef = useRef(null)
+
+  const { scrollYProgress } = useScroll()
+  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 })
 
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+    setMenuOpen(false)
   }
 
+  // Close mobile menu on outside click
+  useEffect(() => {
+    if (!menuOpen) return
+    const handleClick = (e) => {
+      if (navRef.current && !navRef.current.contains(e.target)) setMenuOpen(false)
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [menuOpen])
+
+  // Scroll-to-top button visibility
+  useEffect(() => {
+    const handleScroll = () => setShowScrollTop(window.scrollY > 300)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
-    <div className="min-h-screen bg-[#0f0f0f] text-[#e5e5e5] font-sans">
+    <div className="min-h-screen bg-[#0f0f0f] text-[#e5e5e5] font-sans overflow-x-hidden">
+
+      {/* SCROLL PROGRESS BAR */}
+      <motion.div
+        style={{ scaleX, background: GREEN }}
+        className="fixed top-0 left-0 right-0 h-[2px] z-[60] origin-left"
+      />
 
       {/* NAV */}
-      <nav className="sticky top-0 z-50 border-b border-[#1e1e1e] bg-[#0f0f0f]/90 backdrop-blur-sm">
+      <nav ref={navRef} className="sticky top-0 z-50 border-b border-[#1e1e1e] bg-[#0f0f0f]/90 backdrop-blur-sm">
         <div className="max-w-5xl mx-auto px-4 md:px-6 py-4 grid grid-cols-3 items-center">
+
+          {/* Logo */}
           <span className="text-base font-bold tracking-tight text-white">
             CQ<span style={{ color: GREEN }}>.</span>dev
           </span>
+
+          {/* Desktop nav links */}
           <div className="hidden md:flex justify-center items-center gap-5">
-            {['about','stack','projects','education','blog','contact'].map(k => (
+            {NAV_KEYS.map(k => (
               <button key={k} onClick={() => scrollTo(k)}
-                className="text-sm text-[#888] hover:text-[#6AB42D] transition-colors capitalize whitespace-nowrap">
+                className="nav-link text-sm text-[#888] hover:text-[#6AB42D] transition-colors capitalize whitespace-nowrap">
                 {t.nav[k]}
               </button>
             ))}
           </div>
-          <div className="flex justify-end gap-1">
-            {['en','es'].map(l => (
+
+          {/* Right: lang toggle + hamburger */}
+          <div className="flex justify-end items-center gap-2">
+            {['en', 'es'].map(l => (
               <button key={l} onClick={() => setLang(l)}
-                className={`text-xs px-3 py-1 rounded border transition-colors uppercase font-medium ${
+                className={`text-xs px-3 py-1 rounded border transition-colors uppercase font-medium min-h-[36px] ${
                   lang === l
                     ? 'bg-[#6AB42D] text-white border-[#6AB42D]'
                     : 'bg-transparent text-[#666] border-[#333] hover:border-[#555]'
@@ -72,16 +119,78 @@ export default function App() {
                 {l}
               </button>
             ))}
+
+            {/* Hamburger — mobile only */}
+            <button
+              onClick={() => setMenuOpen(v => !v)}
+              className="md:hidden flex flex-col gap-[6px] p-2 min-h-[44px] min-w-[44px] items-center justify-center"
+              aria-label="Toggle menu"
+            >
+              <motion.span
+                animate={menuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
+                transition={{ duration: 0.2 }}
+                className="block w-5 h-0.5 bg-[#888] rounded-full"
+              />
+              <motion.span
+                animate={menuOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
+                transition={{ duration: 0.15 }}
+                className="block w-5 h-0.5 bg-[#888] rounded-full"
+              />
+              <motion.span
+                animate={menuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
+                transition={{ duration: 0.2 }}
+                className="block w-5 h-0.5 bg-[#888] rounded-full"
+              />
+            </button>
           </div>
         </div>
+
+        {/* Mobile menu dropdown */}
+        <AnimatePresence>
+          {menuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.22, ease: 'easeInOut' }}
+              className="md:hidden border-t border-[#1e1e1e] overflow-hidden bg-[#0a0a0a]/95 backdrop-blur-sm"
+            >
+              <div className="px-4 py-3 flex flex-col">
+                {NAV_KEYS.map((k, i) => (
+                  <motion.button
+                    key={k}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.04, duration: 0.2 }}
+                    onClick={() => scrollTo(k)}
+                    className="text-left py-3 text-sm text-[#888] hover:text-[#6AB42D] transition-colors capitalize border-b border-[#1a1a1a] last:border-0 min-h-[44px] flex items-center"
+                  >
+                    {t.nav[k]}
+                  </motion.button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
       {/* HERO */}
-      <section className="max-w-3xl mx-auto px-4 md:px-6 pt-20 pb-16">
+      <section className="relative max-w-3xl mx-auto px-4 md:px-6 pt-20 pb-16">
+        {/* Dot grid background */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: 'radial-gradient(circle, #1e1e1e 1px, transparent 1px)',
+            backgroundSize: '28px 28px',
+            maskImage: 'radial-gradient(ellipse 90% 80% at 20% 40%, black 30%, transparent 80%)',
+            WebkitMaskImage: 'radial-gradient(ellipse 90% 80% at 20% 40%, black 30%, transparent 80%)',
+          }}
+        />
+
         <motion.div
           initial={{ opacity: 0, x: -24 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
         >
           <span className="inline-block text-xs px-3 py-1 rounded-full border mb-6"
             style={{ background: '#1a2a0f', color: GREEN, borderColor: '#2d4a1a' }}>
@@ -92,22 +201,24 @@ export default function App() {
             {t.hero.title2}<span style={{ color: GREEN }}>.</span>
           </h1>
         </motion.div>
+
         <motion.div
           initial={{ opacity: 0, x: 24 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.4, delay: 0.15 }}
+          transition={{ duration: 0.4, delay: 0.15, ease: 'easeOut' }}
         >
           <p className="text-[#777] text-base leading-relaxed max-w-xl mb-8">
             {t.hero.desc}
           </p>
           <div className="flex gap-3 flex-wrap">
             <button onClick={() => scrollTo('projects')}
-              className="px-5 py-2.5 rounded-lg text-sm font-medium text-white transition-opacity hover:opacity-90"
+              className="px-5 py-2.5 rounded-lg text-sm font-medium text-white transition-opacity hover:opacity-90 min-h-[44px]"
               style={{ background: GREEN }}>
               {t.hero.cta1}
             </button>
-            <a href={`/Cristian-Quiros-CV-${lang.toUpperCase()}.pdf`} download={`Cristian-Quiros-CV-${lang.toUpperCase()}.pdf`}
-              className="px-5 py-2.5 rounded-lg text-sm font-medium text-[#ccc] border border-[#444] hover:border-[#666] transition-colors">
+            <a href={`/Cristian-Quiros-CV-${lang.toUpperCase()}.pdf`}
+              download={`Cristian-Quiros-CV-${lang.toUpperCase()}.pdf`}
+              className="px-5 py-2.5 rounded-lg text-sm font-medium text-[#ccc] border border-[#444] hover:border-[#666] transition-colors min-h-[44px] flex items-center">
               {t.hero.cta2}
             </a>
           </div>
@@ -115,64 +226,65 @@ export default function App() {
       </section>
 
       {/* ABOUT */}
-      <section id="about" className="max-w-3xl mx-auto px-4 md:px-6 py-14 border-t border-[#1e1e1e]">
+      <motion.section id="about"
+        className="max-w-3xl mx-auto px-4 md:px-6 py-14 border-t border-[#1e1e1e]"
+        {...fadeUp()}
+      >
         <SectionLabel>{t.about.label}</SectionLabel>
         <h2 className="text-2xl font-semibold text-white mb-8 tracking-tight">{t.about.title}</h2>
         <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
           <img src={avatar} alt="Cristian Quirós"
             className="w-20 h-20 rounded-full object-cover border-2 flex-shrink-0"
             style={{ borderColor: GREEN }} />
-          <div className="space-y-3">
+          <div className="space-y-3 text-center md:text-left">
             <p className="text-[#888] text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: t.about.p1 }} />
             <p className="text-[#888] text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: t.about.p2 }} />
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* STACK */}
-      <motion.section
-        id="stack"
-        className="max-w-3xl mx-auto px-4 md:px-6 py-14 border-t border-[#1e1e1e]"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        viewport={{ once: true }}
-      >
-        <SectionLabel>{t.stack.label}</SectionLabel>
-        <h2 className="text-2xl font-semibold text-white mb-8 tracking-tight">{t.stack.title}</h2>
+      <section id="stack" className="max-w-3xl mx-auto px-4 md:px-6 py-14 border-t border-[#1e1e1e]">
+        <motion.div {...fadeUp()}>
+          <SectionLabel>{t.stack.label}</SectionLabel>
+          <h2 className="text-2xl font-semibold text-white mb-8 tracking-tight">{t.stack.title}</h2>
+        </motion.div>
         <div className="space-y-5">
           {[
             { key: 'backend', items: techStack.backend },
             { key: 'frontend', items: techStack.frontend },
             { key: 'infra', items: techStack.infra },
             { key: 'tools', items: techStack.tools },
-          ].map(({ key, items }) => (
-            <div key={key}>
+          ].map(({ key, items }, groupIdx) => (
+            <motion.div key={key} {...fadeUp(groupIdx * 0.09)}>
               <p className="text-xs text-[#555] mb-2 uppercase tracking-widest">{t.stack[key]}</p>
               <div className="flex flex-wrap gap-2">
                 {items.map(item => (
-                  <Badge key={item} highlight={['Java','Spring Boot','React 19','TypeScript','Node.js','PostgreSQL'].includes(item)}>
+                  <Badge key={item} highlight={['Java', 'Spring Boot', 'React 19', 'TypeScript', 'Node.js', 'PostgreSQL'].includes(item)}>
                     {item}
                   </Badge>
                 ))}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
-      </motion.section>
+      </section>
 
       {/* PROJECTS */}
       <section id="projects" className="max-w-3xl mx-auto px-4 md:px-6 py-14 border-t border-[#1e1e1e]">
-        <SectionLabel>{t.projects.label}</SectionLabel>
-        <h2 className="text-2xl font-semibold text-white mb-8 tracking-tight">{t.projects.title}</h2>
+        <motion.div {...fadeUp()}>
+          <SectionLabel>{t.projects.label}</SectionLabel>
+          <h2 className="text-2xl font-semibold text-white mb-8 tracking-tight">{t.projects.title}</h2>
+        </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {t.projects.items.map((proj, i) => (
             <motion.div key={proj.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.4, delay: i * 0.1, ease: 'easeOut' }}
               viewport={{ once: true }}
-              className="bg-[#161616] border border-[#2a2a2a] rounded-xl p-5 hover:border-[#3a5a1a] transition-colors flex flex-col justify-between gap-4">
+              className="bg-[#161616] border border-[#2a2a2a] rounded-xl p-5 hover:border-[#3a5a1a] hover:shadow-[0_0_24px_rgba(106,180,45,0.08)] flex flex-col justify-between gap-4 cursor-default">
               <div>
                 <div className="flex justify-between items-start mb-2">
                   <div className="flex items-center gap-2">
@@ -184,7 +296,7 @@ export default function App() {
                     )}
                     <span className="text-white font-semibold text-base">{proj.title}</span>
                   </div>
-                  <span className={`text-[11px] px-2 py-0.5 rounded-full border ${
+                  <span className={`text-[11px] px-2 py-0.5 rounded-full border flex-shrink-0 ${
                     proj.status === 'live'
                       ? 'bg-[#0d2010] text-[#6AB42D] border-[#1e4020]'
                       : 'bg-[#1a1a00] text-[#aaa800] border-[#2a2a00]'
@@ -214,12 +326,18 @@ export default function App() {
 
       {/* BLOG */}
       <section id="blog" className="max-w-3xl mx-auto px-4 md:px-6 py-14 border-t border-[#1e1e1e]">
-        <SectionLabel>{t.blog.label}</SectionLabel>
-        <h2 className="text-2xl font-semibold text-white mb-2 tracking-tight">{t.blog.title}</h2>
-        <p className="text-[#555] text-sm mb-8">{t.blog.subtitle}</p>
+        <motion.div {...fadeUp()}>
+          <SectionLabel>{t.blog.label}</SectionLabel>
+          <h2 className="text-2xl font-semibold text-white mb-2 tracking-tight">{t.blog.title}</h2>
+          <p className="text-[#555] text-sm mb-8">{t.blog.subtitle}</p>
+        </motion.div>
         <div className="space-y-4">
           {t.blog.items.map((post, i) => (
-            <div key={i}
+            <motion.div key={i}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: i * 0.08, ease: 'easeOut' }}
+              viewport={{ once: true }}
               className="bg-[#161616] border border-[#2a2a2a] rounded-xl p-5 hover:border-[#3a5a1a] transition-colors cursor-pointer">
               <div className="flex justify-between items-start mb-2">
                 <span className="text-white font-medium text-sm leading-snug max-w-sm">{post.title}</span>
@@ -229,23 +347,18 @@ export default function App() {
               <div className="flex flex-wrap gap-1">
                 {post.tags.map(tag => <Tag key={tag}>{tag}</Tag>)}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
 
       {/* CONTACT */}
-      <motion.section
-        id="contact"
-        className="max-w-3xl mx-auto px-4 md:px-6 py-14 border-t border-[#1e1e1e]"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        viewport={{ once: true }}
-      >
-        <SectionLabel>{t.contact.label}</SectionLabel>
-        <h2 className="text-2xl font-semibold text-white mb-2 tracking-tight">{t.contact.title}</h2>
-        <p className="text-[#666] text-sm mb-8 max-w-md leading-relaxed">{t.contact.desc}</p>
+      <section id="contact" className="max-w-3xl mx-auto px-4 md:px-6 py-14 border-t border-[#1e1e1e]">
+        <motion.div {...fadeUp()}>
+          <SectionLabel>{t.contact.label}</SectionLabel>
+          <h2 className="text-2xl font-semibold text-white mb-2 tracking-tight">{t.contact.title}</h2>
+          <p className="text-[#666] text-sm mb-8 max-w-md leading-relaxed">{t.contact.desc}</p>
+        </motion.div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {[
             {
@@ -282,8 +395,12 @@ export default function App() {
               ),
               label: 'Location', value: 'San José, Costa Rica', href: null,
             },
-          ].map(({ icon, label, value, href }) => (
-            <div key={label}
+          ].map(({ icon, label, value, href }, i) => (
+            <motion.div key={label}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: i * 0.07, ease: 'easeOut' }}
+              viewport={{ once: true }}
               className="bg-[#161616] border border-[#2a2a2a] rounded-xl p-4 flex items-center gap-3 hover:border-[#3a5a1a] transition-colors">
               <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
                 style={{ background: '#1a2a0f' }}>
@@ -300,10 +417,10 @@ export default function App() {
                   <p className="text-[#ccc] text-sm font-medium">{value}</p>
                 )}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
-      </motion.section>
+      </section>
 
       {/* FOOTER */}
       <footer className="border-t border-[#1e1e1e] py-8 text-center">
@@ -311,6 +428,26 @@ export default function App() {
           Built with React + Vite + Tailwind · Cristian Quirós 2026
         </p>
       </footer>
+
+      {/* SCROLL TO TOP */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 12 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="fixed bottom-6 right-6 w-10 h-10 rounded-full flex items-center justify-center z-40 border border-[#3a5a1a] hover:opacity-90 transition-opacity shadow-lg"
+            style={{ background: '#1a2a0f' }}
+            aria-label="Scroll to top"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={GREEN} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="18 15 12 9 6 15"/>
+            </svg>
+          </motion.button>
+        )}
+      </AnimatePresence>
 
     </div>
   )

@@ -4,9 +4,12 @@ const GREEN = '#6AB42D'
 
 function SectionLabel({ children }) {
   return (
-    <p className="text-xs font-semibold tracking-[2px] uppercase mb-1" style={{ color: GREEN }}>
-      {children}
-    </p>
+    <div className="flex items-center gap-2 mb-1">
+      <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: GREEN }} />
+      <p className="text-xs font-semibold tracking-[2px] uppercase" style={{ color: GREEN }}>
+        {children}
+      </p>
+    </div>
   )
 }
 
@@ -19,27 +22,23 @@ export default function Education({ data }) {
         {data.items.map((item, i) => (
           <motion.div
             key={item.institution + item.degree}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: i * 0.1 }}
+            initial={{ opacity: 0, x: -24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4, delay: i * 0.1, ease: 'easeOut' }}
             viewport={{ once: true }}
-            className="bg-[#161616] border border-[#2a2a2a] rounded-xl p-5 hover:border-[#3a5a1a] transition-colors flex items-start gap-4"
+            className="bg-[#161616] border border-[#2a2a2a] rounded-xl p-5 hover:border-[#3a5a1a] transition-colors flex flex-col sm:flex-row items-start gap-5"
           >
-            {item.logo ? (
+            {/* Logo */}
+            <div className="flex-shrink-0 bg-white rounded-xl px-3 py-2 flex items-center justify-center"
+              style={{ minWidth: '96px', minHeight: '56px' }}>
               <img
                 src={item.logo}
                 alt={item.institution}
-                className="w-12 h-12 object-contain flex-shrink-0 rounded-lg"
-                style={{ background: '#1a2a0f', padding: '4px' }}
+                className="w-24 h-12 object-contain"
               />
-            ) : (
-              <div
-                className="w-12 h-12 flex-shrink-0 rounded-lg flex items-center justify-center text-xs font-bold"
-                style={{ background: '#1a2a0f', color: GREEN }}
-              >
-                LPI
-              </div>
-            )}
+            </div>
+
+            {/* Info */}
             <div className="flex-1 min-w-0">
               <div className="flex flex-wrap items-start justify-between gap-2 mb-1">
                 <span className="text-white font-semibold text-sm leading-snug">{item.institution}</span>

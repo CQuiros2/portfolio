@@ -24,3 +24,30 @@ mark {
 ::-webkit-scrollbar-track { background: #0f0f0f; }
 ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #3a3a3a; }
+
+/* Nav link underline animation */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #6AB42D;
+  transition: width 0.25s ease;
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Highlighted badge shimmer */
+@keyframes badge-glow {
+  0%, 100% { box-shadow: 0 0 0px rgba(106,180,45,0); }
+  50%       { box-shadow: 0 0 8px rgba(106,180,45,0.35); }
+}
+.badge-highlight {
+  animation: badge-glow 3s ease-in-out infinite;
+}
