@@ -21,7 +21,7 @@ export const content = {
       title: 'Who I am',
       p1: "I'm Cristian Quirós — Full Stack Developer based in San José, Costa Rica. At Tubertico I own the entire tech stack: I built and shipped the company website (tubertico.com) solo, from architecture to production on DigitalOcean, and I'm currently leading the development of a full internal ERP system covering inventory, purchasing, and reporting.",
       p2: "My stack: Java, Spring Boot, React 19, TypeScript, Express, PostgreSQL, Docker. I write raw SQL, design relational schemas, build REST APIs, manage Linux servers, and configure CI/CD pipelines — all independently. Final year of Software Engineering at Universidad Latina de Costa Rica.",
-      badge: "🟢 Actively looking for remote junior to mid-level Full Stack or Backend roles worldwide",
+      badge: "🟢 Actively looking for remote junior Full Stack or Backend roles worldwide",
     },
     stack: {
       label: 'Stack',
@@ -101,7 +101,7 @@ export const content = {
       title: 'Quién soy',
       p1: "Soy Cristian Quirós — Desarrollador Full Stack en San José, Costa Rica. En Tubertico soy dueño del stack tecnológico completo: construí y desplegué el sitio oficial de la empresa (tubertico.com) solo, desde la arquitectura hasta producción en DigitalOcean, y actualmente lidero el desarrollo de un ERP interno completo con módulos de inventario, compras y reportes.",
       p2: "Mi stack: Java, Spring Boot, React 19, TypeScript, Express, PostgreSQL, Docker. Escribo SQL directo, diseño esquemas relacionales, construyo APIs REST, administro servidores Linux y configuro pipelines de CI/CD — todo de forma independiente. Último año de Ingeniería del Software en la Universidad Latina de Costa Rica.",
-      badge: "🟢 En búsqueda activa de roles remotos junior o mid-level como Desarrollador Full Stack o Backend en cualquier parte del mundo",
+      badge: "🟢 En búsqueda activa de roles remotos junior como Desarrollador Full Stack o Backend en cualquier parte del mundo",
     },
     stack: {
       label: 'Stack',
