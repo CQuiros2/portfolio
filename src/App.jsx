@@ -198,7 +198,7 @@ export default function App() {
             {t.hero.tag}
           </span>
           <h1 className="leading-tight tracking-tight text-white mb-4">
-            <span className="block text-3xl md:text-5xl font-bold">{t.hero.title1}</span>
+            <span className="block text-3xl md:text-5xl font-bold">{t.hero.title1}<span style={{ color: '#6AB42D' }}>.</span></span>
             <span className="block text-xl md:text-3xl font-semibold mt-1" style={{ color: GREEN }}>
               {t.hero.title2}<span style={{ color: GREEN }}>.</span>
             </span>
